@@ -10,6 +10,8 @@ export default function ProjectPage() {
     const [selectedProject, setSelectedProject] = useState(null)
     const [showAddForm, setShowAddForm] = useState(false)
     const [selectedProjectDetails, setSelectedProjectDetails] = useState(null)
+    const [curenttime , setCurrenttime] = useState([])
+
 
     const fetchProjects = async () => {
         try {
@@ -24,6 +26,9 @@ export default function ProjectPage() {
 
     useEffect(() => {
         fetchProjects()
+        currentTime()
+        setInterval(currentTime, 1000);
+
     }, [])
 
     const handleEditClick = (project: any) => {
@@ -58,10 +63,16 @@ export default function ProjectPage() {
             toast.error('Failed to fetch project details');
         }
     }
+    const currentTime = () =>{
+        const time = new Date().toLocaleTimeString();
+        console.log(time);
+        setCurrenttime(time)
+    }  
 
     return (
         <div className='flex flex-col items-center justify-center min-h-screen py-2'>
-            <div className='flex flex-row'>
+            <div id='currenttime'></div>
+            <div className='flex flex-row'>{curenttime}
                 <div className="">
                     <h1 className="flex justify-center text-3xl font-semibold mb-2 text-[#D9D9D9]">
                         Projects
